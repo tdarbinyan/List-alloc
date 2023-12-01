@@ -1,4 +1,174 @@
-# List-alloc
-Written from scratch implementation of std::list with allocators
+# List
 
-todo: need to separate method definitions and declarations to make the class List more readable, will update the code after passing the review
+## Описание класса
+
+Класс `List` представляет собой двусвязный список, реализованный в виде шаблонного контейнера. Каждый элемент списка содержит значение типа `T` и имеет указатели на предыдущий и следующий элементы.
+
+### Подключение и использование
+
+Для использования реализации класса `List`, необходимо скачать файл `list.hpp`, разместить их в локальной директории вашего проекта, и добавить следующую строку в ваш код:
+
+```cpp
+#include "list.hpp"
+```
+
+Это позволит вам включить функционал класса `List` в свой проект и использовать его методы и операторы.
+
+### Класс Node
+
+Внутренний класс `Node` представляет собой базовую структуру для хранения значений в списке. Он содержит указатели на предыдущий и следующий элементы, а также значение.
+
+### Класс BaseNode
+
+Внутренний класс `BaseNode` представляет базовый узел списка, который содержит указатель на начальный элемент списка.
+
+### Итератор
+
+Для обхода элементов списка предоставлен класс `Iterator`, который реализует двунаправленный итератор. В зависимости от параметра шаблона `IsConst`, итератор может быть константным или неконстантным.
+
+### Методы
+
+1. **insert(iter, value):**
+   - Вставляет элемент со значением `value` перед элементом, на который указывает итератор `iter`.
+
+```cpp
+void insert(Iterator<false> iter, const T& value);
+```
+
+2. **insert(iter):**
+   - Вставляет пустой элемент перед элементом, на который указывает итератор `iter`.
+
+```cpp
+void insert(Iterator<false> iter);
+```
+
+3. **erase(iter):**
+   - Удаляет элемент, на который указывает итератор `iter`.
+
+```cpp
+void erase(Iterator<false> iter);
+```
+
+4. **push_back(value):**
+   - Добавляет элемент с заданным значением в конец списка.
+
+```cpp
+void push_back(const T& value);
+```
+
+5. **push_back(value):**
+   - Добавляет элемент с заданным значением в конец списка.
+
+```cpp
+void push_back(T&& value);
+```
+
+6. **emplace_back():**
+   - Добавляет пустой элемент в конец списка.
+
+```cpp
+void emplace_back();
+```
+
+7. **push_front(value):**
+   - Добавляет элемент с заданным значением в начало списка.
+
+```cpp
+void push_front(const T& value);
+```
+
+8. **pop_back():**
+   - Удаляет последний элемент списка.
+
+```cpp
+void pop_back();
+```
+
+9. **pop_front():**
+   - Удаляет первый элемент списка.
+
+```cpp
+void pop_front();
+```
+
+10. **clear():**
+   - Удаляет все элементы списка.
+
+```cpp
+void clear();
+```
+
+### Конструкторы
+
+1. **List(Allocator alloc = Allocator()):**
+   - Конструктор по умолчанию.
+
+```cpp
+explicit List(Allocator alloc = Allocator());
+```
+
+2. **List(count, alloc):**
+   - Конструктор, создающий список с `count` элементами.
+
+```cpp
+explicit List(size_t count, Allocator alloc = Allocator());
+```
+
+3. **List(init, alloc):**
+   - Конструктор, создающий список из списка инициализации `init`.
+
+```cpp
+explicit List(std::initializer_list<T> init, const Allocator& alloc = Allocator());
+```
+
+4. **List(count, value, alloc):**
+   - Конструктор, создающий список с `count` элементами, каждый из которых равен `value`.
+
+```cpp
+List(size_t count, const T& value, const Allocator& alloc = Allocator());
+```
+
+5. **List(copy):**
+   - Конструктор копирования.
+
+```cpp
+List(const List& copy);
+```
+
+### Деструктор
+
+```cpp
+~List();
+```
+
+### Операторы
+
+1. **operator=():**
+   - Оператор присваивания.
+
+```cpp
+List& operator=(const List& copy);
+```
+
+### Геттеры
+
+1. **get_allocator():**
+   - Возвращает аллокатор списка.
+
+```cpp
+node_allocator_type get_allocator() const;
+```
+
+2. **size():**
+   - Возвращает количество элементов в списке.
+
+```cpp
+size_t size() const;
+```
+
+3. **empty():**
+   - Проверяет, пуст ли список.
+
+```cpp
+bool empty() const;
+```
